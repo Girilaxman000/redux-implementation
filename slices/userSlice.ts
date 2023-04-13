@@ -1,5 +1,6 @@
 //for performing async task we create asyncthunk in our slice
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { AppState } from "../store/store";
 
 //slice name / task we want to perform
 export const fetchUsers = createAsyncThunk(
@@ -14,16 +15,22 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
-const initialState = {
+//import all data at once and type can use used on other page.
+export interface userState {
+  users: Array<[]>;
+  value: number;
+}
+
+const initialState: userState = {
   users: [],
   value: 0,
-} as any;
+};
 
 const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    increment: (state, action) => {
+    increment: (state, action: PayloadAction<{ value: number }>): void => {
       state.value += action.payload.value;
     },
   },
@@ -37,5 +44,4 @@ const userSlice = createSlice({
 export default userSlice.reducer;
 
 export const { increment } = userSlice.actions;
-export const getUsers = (state: any) => state.user.users;
-export const getValue = (state: any) => state.user.value;
+export const getUsersState = (state: AppState): userState => state.user;

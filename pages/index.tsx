@@ -5,14 +5,14 @@ import styles from "../styles/Home.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import * as userSlice from "../slices/userSlice";
+import { userState } from "../slices/userSlice";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const users = useRef(false);
   const dispatch = useDispatch<any>();
-  const items = useSelector(userSlice.getUsers);
-  const value = useSelector(userSlice.getValue);
+  const result: userState = useSelector(userSlice.getUsersState);
   useEffect(() => {
     //since here useEffects runs two times
     if (users.current === false) {
@@ -36,11 +36,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        {items.map((item: any, index: any) => {
+        {result.users.map((item: any, index: any) => {
           return <h1 key={index}>{item.company.name}</h1>;
         })}
         <button onClick={handleClick}>Increment</button>
-        <h1>{value}</h1>
+        <h1>{result.value}</h1>
       </main>
     </>
   );
