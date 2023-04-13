@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import * as userSlice from "../slices/userSlice";
 import { userState } from "../slices/userSlice";
+import { AppDispatch, wrapper } from "../store/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const users = useRef(false);
-  const dispatch = useDispatch<any>();
+  const dispatch = useDispatch<AppDispatch>();
   const result: userState = useSelector(userSlice.getUsersState);
   useEffect(() => {
     //since here useEffects runs two times
@@ -45,3 +46,10 @@ export default function Home() {
     </>
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store): any =>
+//     async () => {
+//       store.dispatch(userSlice.fetchUsers());
+//     }
+// );

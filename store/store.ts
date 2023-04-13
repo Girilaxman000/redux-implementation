@@ -14,3 +14,4 @@ export function makeStore() {
 }
 
 export const wrapper = createWrapper(makeStore, { debug: false });
+export type AppDispatch = ReturnType<typeof makeStore>["dispatch"];
